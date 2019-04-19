@@ -4,7 +4,7 @@ title = "chuanMing Blog"     #標題
 theme = "hugo-future-imperfect" 
 preserveTaxonomyNames = true
 paginate = 3
-disqusShortname = "" #留言板帳號
+disqusShortname = "chuanming168" #留言板帳號
 googleAnalytics = "" #googleAnalyticszp 分析
 pluralizeListTitles = false
 # Set the followings to true as part of your site SEO
