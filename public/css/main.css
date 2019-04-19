@@ -55,7 +55,7 @@
 	}
 
 	header p {
-		font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+		font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 		font-size: 0.7em;
 		font-weight: 400;
 		letter-spacing: 0.25em;
@@ -116,7 +116,7 @@
 
 	body, input, select, textarea {
 		color: #333333;
-		font-family: Noto Sans TC,"Source Sans Pro", Helvetica, sans-serif;
+		font-family: Microsoft JhengHei,"Source Sans Pro", Helvetica, sans-serif;
 		font-size: 14pt;
 		font-weight: 400;
 		line-height: 1.75;
@@ -195,7 +195,7 @@
 
 	h1, h2, h3, h4, h5, h6 {
 		color: #3c3b3b;
-		font-family: Noto Sans TC,"Raleway", Helvetica, sans-serif;
+		font-family: Microsoft JhengHei,"Raleway", Helvetica, sans-serif;
 		font-weight: 800;
 		letter-spacing: 0.25em;
 		line-height: 1.65;
@@ -258,7 +258,7 @@
 	code {
 		background: rgba(160, 160, 160, 0.075);
 		border: solid 1px rgba(160, 160, 160, 0.3);
-		font-family:Noto Sans TC, "Courier New", monospace;
+		font-family:Microsoft JhengHei, "Courier New", monospace;
 		font-size: 0.9em;
 		margin: 0 0.25em;
 		padding: 0.25em 0.65em;
@@ -266,7 +266,7 @@
 
 	pre {
 		-webkit-overflow-scrolling: touch;
-		font-family: Noto Sans TC,"Courier New", monospace;
+		font-family: Microsoft JhengHei,"Courier New", monospace;
 		font-size: 0.9em;
 		margin: 0 0 2em 0;
 		display: table;
@@ -323,7 +323,7 @@
 		-ms-justify-content: -ms-flex-end;
 		justify-content: flex-end;
 		border-bottom: 0;
-		font-family: Noto Sans TC,"Raleway", Helvetica, sans-serif;
+		font-family: Microsoft JhengHei,"Raleway", Helvetica, sans-serif;
 		font-size: 0.6em;
 		font-weight: 400;
 		letter-spacing: 0.25em;
@@ -390,7 +390,7 @@
 		color: #3c3b3b;
 		cursor: pointer;
 		display: inline-block;
-		font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+		font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 		font-size: 0.6em;
 		font-weight: 800;
 		height: 4.8125em;
@@ -512,7 +512,7 @@
 			form.contact:before {
 				-moz-osx-font-smoothing: grayscale;
 				-webkit-font-smoothing: antialiased;
-				font-family: Noto Sans TC,FontAwesome;
+				font-family: Microsoft JhengHei,FontAwesome;
 				font-style: normal;
 				font-weight: normal;
 				text-transform: none !important;
@@ -600,7 +600,7 @@
 		.select-wrapper:before {
 			-moz-osx-font-smoothing: grayscale;
 			-webkit-font-smoothing: antialiased;
-			font-family: Noto Sans TC,FontAwesome;
+			font-family: Microsoft JhengHei,FontAwesome;
 			font-style: normal;
 			font-weight: normal;
 			text-transform: none !important;
@@ -660,7 +660,7 @@
 			input[type="radio"] + label:before {
 				-moz-osx-font-smoothing: grayscale;
 				-webkit-font-smoothing: antialiased;
-				font-family:Noto Sans TC, FontAwesome;
+				font-family:Microsoft JhengHei, FontAwesome;
 				font-style: normal;
 				font-weight: normal;
 				text-transform: none !important;
@@ -728,7 +728,7 @@
 		.icon:before {
 			-moz-osx-font-smoothing: grayscale;
 			-webkit-font-smoothing: antialiased;
-			font-family:Noto Sans TC, FontAwesome;
+			font-family:Microsoft JhengHei, FontAwesome;
 			font-style: normal;
 			font-weight: normal;
 			text-transform: none !important;
@@ -892,7 +892,7 @@
 					ul.icons li > *:before {
 						-moz-osx-font-smoothing: grayscale;
 						-webkit-font-smoothing: antialiased;
-						font-family: Noto Sans TC,FontAwesome;
+						font-family: Microsoft JhengHei,FontAwesome;
 						font-style: normal;
 						font-weight: normal;
 						text-transform: none !important;
@@ -935,7 +935,7 @@
 					content: "";
 					-moz-osx-font-smoothing: grayscale;
 					-webkit-font-smoothing: antialiased;
-					font-family:Noto Sans TC, FontAwesome;
+					font-family:Microsoft JhengHei, FontAwesome;
 					font-style: normal;
 					font-weight: normal;
 					text-transform: none !important;
@@ -953,7 +953,7 @@
 					content: "";
 					-moz-osx-font-smoothing: grayscale;
 					-webkit-font-smoothing: antialiased;
-					font-family:Noto Sans TC, FontAwesome;
+					font-family:Microsoft JhengHei, FontAwesome;
 					font-style: normal;
 					font-weight: normal;
 					text-transform: none !important;
@@ -1124,7 +1124,7 @@
 
 					ul.posts article header .published {
 						display: block;
-						font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+						font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 						font-size: 0.6em;
 						font-weight: 400;
 						letter-spacing: 0.25em;
@@ -1206,7 +1206,7 @@
 
 			.mini-post header .published {
 				display: block;
-				font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+				font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 				font-size: 0.6em;
 				font-weight: 400;
 				letter-spacing: 0.25em;
@@ -1330,7 +1330,7 @@
 				.post > header .meta .published {
 					color: #3c3b3b;
 					display: block;
-					font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+					font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 					font-size: 0.7em;
 					font-weight: 800;
 					letter-spacing: 0.25em;
@@ -1408,7 +1408,7 @@
 				.post > footer .stats li ul li {
 					border-left: solid 1px rgba(160, 160, 160, 0.3);
 					display: inline-block;
-					font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+					font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 					font-size: 0.6em;
 					font-weight: 400;
 					letter-spacing: 0.25em;
@@ -1656,7 +1656,7 @@
 					.itemized > header .meta .published {
 						color: #3c3b3b;
 						display: block;
-						font-family: Noto Sans TC,"Raleway", Helvetica, sans-serif;
+						font-family: Microsoft JhengHei,"Raleway", Helvetica, sans-serif;
 						font-size: 0.7em;
 						font-weight: 800;
 						letter-spacing: 0.25em;
@@ -1710,7 +1710,7 @@
 					.itemized > footer .stats li {
 						border-left: solid 1px rgba(160, 160, 160, 0.3);
 						display: inline-block;
-						font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+						font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 						font-size: 0.6em;
 						font-weight: 400;
 						letter-spacing: 0.25em;
@@ -2054,7 +2054,7 @@
 							table > tbody > tr > td:first-child:after {
 								float: right;
 								content: "\f107";
-								font-family:Noto Sans TC, FontAwesome;
+								font-family:Microsoft JhengHei, FontAwesome;
 								font-style: normal;
 								font-weight: normal;
 								text-decoration: inherit;
@@ -2289,7 +2289,7 @@
 
 				#header .links ul li a {
 					border-bottom: 0;
-					font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+					font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 					font-size: 0.7em;
 					font-weight: 400;
 					letter-spacing: 0.25em;
@@ -2344,7 +2344,7 @@
 						#header .main ul li > a:before {
 							-moz-osx-font-smoothing: grayscale;
 							-webkit-font-smoothing: antialiased;
-							font-family:Noto Sans TC, FontAwesome;
+							font-family:Microsoft JhengHei, FontAwesome;
 							font-style: normal;
 							font-weight: normal;
 							text-transform: none !important;
@@ -2665,7 +2665,7 @@
 	#footer .copyright {
 		text-align: center;
 		color: #aaaaaa;
-		font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+		font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 		font-size: 0.5em;
 		font-weight: 400;
 		letter-spacing: 0.25em;
@@ -2756,7 +2756,7 @@
 					}
 
 					#menu .links > li a p {
-						font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+						font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 						font-size: 0.6em;
 						font-weight: 400;
 						letter-spacing: 0.25em;
@@ -2940,7 +2940,7 @@
 						}
 
 						#share-menu .links > li a p {
-							font-family:Noto Sans TC, "Raleway", Helvetica, sans-serif;
+							font-family:Microsoft JhengHei, "Raleway", Helvetica, sans-serif;
 							font-size: 0.6em;
 							font-weight: 400;
 							letter-spacing: 0.25em;
