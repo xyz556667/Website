@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on chuanMing Blog</title>
+    <link>/categories/go/</link>
+    <description>Recent content in Go on chuanMing Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/go/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>UNIT09A：期中專案(OLIST)資料探索</title>
+      <link>/blog/unit09a/</link>
+      <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/unit09a/</guid>
+      <description>單元摘要： 期中專案(OLIST)資料探索
+
+pacman::p_load(dplyr, ggplot2, readr)💡讀完原始資料之後，先將資料壓縮起來，之後再從壓縮檔讀進會比較快、比較方便
+load(&amp;quot;data/olist.rdata&amp;quot;)【B】檢視資料B1. 確認鍵值欄位Sellers: S$seller_id
+n_distinct(S$seller_id) == nrow(S)[1] TRUEProducts: P$product_id
+n_distinct(S$seller_id) == nrow(S)[1] TRUE
+B2. 多重鍵值Reviews: R$review_id
+n_distinct(R$review_id) == nrow(R)[1] FALSEReviews: R$review_id &amp;amp; R$order_id
+nrow(unique(R[, 1:2])) == nrow(R)[1] TRUE一則評論最多可能談到三個訂單
+table(R$review_id) %&amp;gt;% table.1 2 3 98371 777 25 
+B3. 外來鍵值Order Items: I$order_id &amp;amp; I$order_item_id</description>
+    </item>
+    
+    <item>
+      <title>UNIT09B：多軸度比較分析</title>
+      <link>/blog/unit09b/</link>
+      <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/unit09b/</guid>
+      <description>pacman::p_load(dplyr, ggplot2, readr, plotly, googleVis)load(&amp;quot;data/olist.rdata&amp;quot;)load(&amp;quot;data/Z.rdata&amp;quot;)使用 ggplotggplot(segment, aes(x=log(avgItemsSold), y=avgPrice, col=avgScore)) +geom_point(aes(size=sqrt(noSellers))) +geom_text(aes(label=business_segment), size=3)使用 ggplotlyg = ggplot(segment, aes(x=log(avgItemsSold), y=avgPrice, col=avgScore)) +geom_point(aes(size=sqrt(noSellers))) +geom_text(aes(label=business_segment), size=0.5)ggplotly(g){&#34;x&#34;:{&#34;data&#34;:[{&#34;x&#34;:[5.28826703069454,2.90386061968211,2.54553127160444,2.18278389318142,2.28819635554195,2.32949254591397,2.82277846676364,2.29631547998045,1.69866904616204,3.33932197794407,2.5483284762255,1.94591014905531,2.9338568698359,2.30258509299405,2.3434070875143,2.52572864430826,3.30810695859614,2.14843441316679,2.30258509299405,3.27714473299218,1.83258146374831,2.4932054526027,2.41591377830105,1.69459572077441,0.693147180559945,0.980829253011726,1.38629436111989,1.29928298413026,1.09861228866811],&#34;y&#34;:[592.317525252525,4978.82082825822,4044.60862745098,5666.27469090909,4836.58101449275,4293.13646017699,2407.27311188811,3475.59647798742,5519.81341463415,930.537943262411,1276.54346368715,2331.56571428571,821.730319148936,1423.37,1130.13984,849.516,362.215609756098,948.658666666667,783.108,266.217735849057,934.3424,462.542148760331,430.650892857143,720.33612244898,1325,392.16,224,238.881818181818,129.66],&#34;text&#34;:[&#34;sqrt(noSellers): 1.7321
+log(avgItemsSold): 5.28827
+avgPrice: 592.32
+avgScore: 3.0273&#34;,&#34;sqrt(noSellers): 6.7082
+log(avgItemsSold): 2.90386
+avgPrice: 4978.82
+avgScore: 4.5070&#34;,&#34;sqrt(noSellers): 6.6332
+log(avgItemsSold): 2.54553
+avgPrice: 4044.61
+avgScore: 4.4690&#34;,&#34;sqrt(noSellers): 5.5678
+log(avgItemsSold): 2.18278
+avgPrice: 5666.</description>
+    </item>
+    
+    <item>
+      <title>測試</title>
+      <link>/blog/2019/</link>
+      <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2019/</guid>
+      <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+When you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</description>
+    </item>
+    
+    <item>
+      <title>(Hu)go Template Primer</title>
+      <link>/blog/goisforlovers/</link>
+      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/goisforlovers/</guid>
+      <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
+This document is a brief primer on using go templates.</description>
+    </item>
+    
+  </channel>
+</rss>

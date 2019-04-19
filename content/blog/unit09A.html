@@ -1,0 +1,222 @@
+---
+author: Unknown Author
+categories:
+- Go
+date: "2019-04-02"
+description: ""
+featured: ""
+featuredalt: Pic 2
+featuredpath: date
+linktitle: ""
+title: "UNIT09A：期中專案(OLIST)資料探索"
+type: post
+---
+
+
+
+<hr>
+<p><strong>單元摘要：</strong> 期中專案(OLIST)資料探索</p>
+<p><br></p>
+<pre class="r"><code>pacman::p_load(dplyr, ggplot2, readr)</code></pre>
+<hr>
+<p><span style="font-size:24px">💡</span>
+讀完原始資料之後，先將資料壓縮起來，之後再從壓縮檔讀進會比較快、比較方便<br></p>
+<pre class="r"><code>load(&quot;data/olist.rdata&quot;)</code></pre>
+<br><br>
+<hr>
+<div id="b" class="section level3">
+<h3>【B】檢視資料</h3>
+<div id="b1.-" class="section level5">
+<h5>B1. 確認鍵值欄位</h5>
+<p>Sellers: <code>S$seller_id</code></p>
+<pre class="r"><code>n_distinct(S$seller_id) == nrow(S)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p>Products: <code>P$product_id</code></p>
+<pre class="r"><code>n_distinct(S$seller_id) == nrow(S)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p><br></p>
+</div>
+<div id="b2.-" class="section level5">
+<h5>B2. 多重鍵值</h5>
+<p>Reviews: <code>R$review_id</code></p>
+<pre class="r"><code>n_distinct(R$review_id) == nrow(R)</code></pre>
+<pre><code>[1] FALSE</code></pre>
+<p>Reviews: <code>R$review_id</code> &amp; <code>R$order_id</code></p>
+<pre class="r"><code>nrow(unique(R[, 1:2])) == nrow(R)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p>一則評論最多可能談到三個訂單</p>
+<pre class="r"><code>table(R$review_id) %&gt;% table</code></pre>
+<pre><code>.
+    1     2     3 
+98371   777    25 </code></pre>
+<p><br></p>
+</div>
+<div id="b3.-" class="section level5">
+<h5>B3. 外來鍵值</h5>
+<p>Order Items: <code>I$order_id</code> &amp; <code>I$order_item_id</code></p>
+<pre class="r"><code>nrow(unique(I[, 1:2])) == nrow(I)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p><span style="font-size:24px">🗿</span>
+一筆訂單最多會有多少項目(<code>order_item_id</code>)呢？</p>
+<pre class="r"><code>#</code></pre>
+<p><span style="font-size:24px">🗿</span>
+一筆訂單最多會有多少個賣家(<code>seller_id</code>)呢？</p>
+<pre class="r"><code>table( unique(I[, c(1,4)])$order_id ) %&gt;% table</code></pre>
+<pre><code>.
+    1     2     3     4     5 
+97388  1219    54     3     2 </code></pre>
+<p><span style="font-size:24px">🗿</span>
+一筆訂單最多會包含多少種產品(<code>product_id</code>)呢？</p>
+<pre class="r"><code>#</code></pre>
+<br><br>
+<hr>
+</div>
+</div>
+<div id="c" class="section level3">
+<h3>【C】製作欄位</h3>
+<p><span style="font-size:24px">💡</span>
+做分析之前我們一定要先決定分析對象(Unit of Analysis)<br></p>
+<p>假如我們要對所有的賣家做分析，我們就要依<code>selller_id</code>做彙總； 先從訂單項目(<code>I</code>)做起</p>
+<pre class="r"><code>Z = I %&gt;% group_by(seller_id) %&gt;% summarise(
+  ItemsSold = n(),
+  Rev = sum(price),
+  noProd = n_distinct(product_id),
+  avgPrice = mean(price),
+  maxPrice = max(price),
+  minPrice = min(price),
+  avgFreight = mean(freight_value),
+  avgRevProd = Rev/noProd,
+  avgItemsProd = ItemsSold/noProd
+)
+summary(Z)</code></pre>
+<pre><code>  seller_id           ItemsSold           Rev             noProd     
+ Length:3095        Min.   :   1.0   Min.   :     4   Min.   :  1.0  
+ Class :character   1st Qu.:   2.0   1st Qu.:   209   1st Qu.:  2.0  
+ Mode  :character   Median :   8.0   Median :   821   Median :  4.0  
+                    Mean   :  36.4   Mean   :  4391   Mean   : 11.1  
+                    3rd Qu.:  24.0   3rd Qu.:  3281   3rd Qu.: 10.0  
+                    Max.   :2033.0   Max.   :229473   Max.   :399.0  
+    avgPrice         maxPrice         minPrice        avgFreight   
+ Min.   :   3.5   Min.   :   3.5   Min.   :   0.8   Min.   :  1.2  
+ 1st Qu.:  52.2   1st Qu.:  81.0   1st Qu.:  21.6   1st Qu.: 14.7  
+ Median :  95.5   Median : 169.9   Median :  44.8   Median : 18.2  
+ Mean   : 176.3   Mean   : 335.4   Mean   : 110.4   Mean   : 23.4  
+ 3rd Qu.: 174.0   3rd Qu.: 349.9   3rd Qu.:  99.0   3rd Qu.: 24.4  
+ Max.   :6729.0   Max.   :6735.0   Max.   :6729.0   Max.   :308.3  
+   avgRevProd       avgItemsProd   
+ Min.   :    3.5   Min.   :  1.00  
+ 1st Qu.:   89.0   1st Qu.:  1.00  
+ Median :  179.8   Median :  1.67  
+ Mean   :  417.5   Mean   :  2.67  
+ 3rd Qu.:  397.7   3rd Qu.:  2.73  
+ Max.   :16983.5   Max.   :128.33  </code></pre>
+<p>計算每一個賣家的評等時要考慮：</p>
+<ul>
+<li>每一則評論可能有多於一個訂單而</li>
+<li>每一筆訂單可能包含多一個賣家</li>
+</ul>
+<p>這兩個問題。</p>
+<pre class="r"><code>X = unique(I[,c(1,4)]) %&gt;% left_join(R[,2:3]) %&gt;% 
+  group_by(seller_id) %&gt;% summarise(
+    noReview = n(),
+    avgScore = mean(review_score),
+    minScore = min(review_score),
+    maxScore = max(review_score)) </code></pre>
+<pre><code>Joining, by = &quot;order_id&quot;</code></pre>
+<pre class="r"><code>summary(X)</code></pre>
+<pre><code>  seller_id            noReview         avgScore       minScore   
+ Length:3095        Min.   :   1.0   Min.   :1.00   Min.   :1.00  
+ Class :character   1st Qu.:   2.0   1st Qu.:3.75   1st Qu.:1.00  
+ Mode  :character   Median :   7.0   Median :4.17   Median :1.00  
+                    Mean   :  32.5   Mean   :3.98   Mean   :2.25  
+                    3rd Qu.:  22.0   3rd Qu.:4.60   3rd Qu.:4.00  
+                    Max.   :1860.0   Max.   :5.00   Max.   :5.00  
+    maxScore   
+ Min.   :1.00  
+ 1st Qu.:5.00  
+ Median :5.00  
+ Mean   :4.69  
+ 3rd Qu.:5.00  
+ Max.   :5.00  </code></pre>
+<p>最後併入賣家的基本資料</p>
+<pre class="r"><code>Z = Z %&gt;% left_join(X) %&gt;% left_join(S)</code></pre>
+<pre><code>Joining, by = &quot;seller_id&quot;
+Joining, by = &quot;seller_id&quot;</code></pre>
+<pre class="r"><code>is.na(Z) %&gt;% colSums</code></pre>
+<pre><code>             seller_id              ItemsSold                    Rev 
+                     0                      0                      0 
+                noProd               avgPrice               maxPrice 
+                     0                      0                      0 
+              minPrice             avgFreight             avgRevProd 
+                     0                      0                      0 
+          avgItemsProd               noReview               avgScore 
+                     0                      0                      0 
+              minScore               maxScore seller_zip_code_prefix 
+                     0                      0                      0 
+           seller_city           seller_state 
+                     0                      0 </code></pre>
+<p>做一個簡單的分析： 賣家的平均評等最高的20個省份是 …</p>
+<pre class="r"><code>tapply(Z$avgScore, Z$seller_state, mean) %&gt;% sort %&gt;% tail(20) </code></pre>
+<pre><code>    SE     RO     BA     SP     RJ     MA     PR     DF     MG     RS     SC 
+3.8500 3.8542 3.9316 3.9541 3.9657 3.9720 4.0155 4.0319 4.0336 4.0501 4.0725 
+    PI     GO     PE     ES     MT     MS     PB     RN     PA 
+4.0833 4.1011 4.1091 4.1959 4.2231 4.2510 4.2812 4.4757 4.5000 </code></pre>
+<br><br>
+<hr>
+</div>
+<div id="d" class="section level3">
+<h3>【D】併入其它資料</h3>
+<p><code>Funnel</code>資料集裡面有更多賣家欄位，但是它的資料筆數不多</p>
+<pre class="r"><code>Z1 = left_join(Q, L) %&gt;% inner_join(Z)</code></pre>
+<pre><code>Joining, by = &quot;mql_id&quot;</code></pre>
+<pre><code>Joining, by = &quot;seller_id&quot;</code></pre>
+<pre class="r"><code>dim(Z1)</code></pre>
+<pre><code>[1] 380  33</code></pre>
+<p>依賣家的行為做彙總</p>
+<pre class="r"><code>behavior = group_by(Z1, lead_behaviour_profile) %&gt;% summarise(
+  noSellers = n(),
+  totalRev = sum(Rev),
+  avgRev = mean(Rev),
+  avgReview = mean(noReview),
+  avgScore = mean(avgScore)
+  ) %&gt;% arrange( desc(avgScore) )
+behavior</code></pre>
+<pre><code># A tibble: 7 x 6
+  lead_behaviour_profile noSellers totalRev avgRev avgReview avgScore
+  &lt;chr&gt;                      &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 cat, wolf                      1      59     59       1        5   
+2 wolf                          43   21378.   497.      4.60     4.39
+3 &lt;NA&gt;                          91  231802.  2547.     17.0      4.33
+4 eagle                         50   90725.  1814.     13.5      4.28
+5 cat                          184  282479.  1535.      9.64     4.25
+6 shark                         10   49512.  4951.     32.3      4.23
+7 eagle, cat                     1     896    896       3        3.33</code></pre>
+<p>依產業別做彙總</p>
+<pre class="r"><code>segment = group_by(Z1, business_segment) %&gt;% summarise(
+  noSellers = n(),
+  totalRev = sum(Rev),
+  avgItemsSold = mean(ItemsSold),
+  avgPrice = totalRev/avgItemsSold,
+  avgRev = mean(Rev),
+  avgReview = mean(noReview),
+  avgScore = mean(avgScore)
+  ) %&gt;% arrange( desc(totalRev) )
+segment</code></pre>
+<pre><code># A tibble: 29 x 8
+   business_segment noSellers totalRev avgItemsSold avgPrice avgRev avgReview
+   &lt;chr&gt;                &lt;int&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+ 1 watches                  3  117279.       198        592. 39093.    193.  
+ 2 health_beauty           45   90836.        18.2     4979.  2019.     15.7 
+ 3 household_utili~        44   51569.        12.8     4045.  1172.     11.4 
+ 4 audio_video_ele~        31   50265.         8.87    5666.  1621.      8.03
+ 5 small_appliances         7   47675.         9.86    4837.  6811.      9.71
+ 6 home_decor              44   44102.        10.3     4293.  1002.      8.23
+ 7 pet                     17   40499.        16.8     2407.  2382.     14.6 
+ 8 construction_to~        32   34539.         9.94    3476.  1079.      8.5 
+ 9 car_accessories         30   30175.         5.47    5520.  1006.      4.93
+10 home_appliances          5   26241.        28.2      931.  5248.     27   
+# ... with 19 more rows, and 1 more variable: avgScore &lt;dbl&gt;</code></pre>
+<pre class="r"><code>save(Z, Z1, segment, file=&quot;data/Z.rdata&quot;)</code></pre>
+<br><br><br>
+<hr>
+</div>

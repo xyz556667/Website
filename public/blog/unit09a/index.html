@@ -1,0 +1,1618 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "\/"
+        },
+        "articleSection" : "blog",
+        "name" : "UNIT09A：期中專案(OLIST)資料探索",
+        "headline" : "UNIT09A：期中專案(OLIST)資料探索",
+        "description" : "單元摘要： 期中專案(OLIST)資料探索\n\npacman::p_load(dplyr, ggplot2, readr)\r\r💡\r讀完原始資料之後，先將資料壓縮起來，之後再從壓縮檔讀進會比較快、比較方便\nload(\x26quot;data\/olist.rdata\x26quot;)\r\r【B】檢視資料\rB1. 確認鍵值欄位\rSellers: S$seller_id\nn_distinct(S$seller_id) == nrow(S)\r[1] TRUE\rProducts: P$product_id\nn_distinct(S$seller_id) == nrow(S)\r[1] TRUE\r\n\rB2. 多重鍵值\rReviews: R$review_id\nn_distinct(R$review_id) == nrow(R)\r[1] FALSE\rReviews: R$review_id \x26amp; R$order_id\nnrow(unique(R[, 1:2])) == nrow(R)\r[1] TRUE\r一則評論最多可能談到三個訂單\ntable(R$review_id) %\x26gt;% table\r.\r1 2 3 98371 777 25 \r\n\rB3. 外來鍵值\rOrder Items: I$order_id \x26amp; I$order_item_id",
+        "inLanguage" : "en",
+        "author" : "",
+        "creator" : "",
+        "publisher": "",
+        "accountablePerson" : "",
+        "copyrightHolder" : "",
+        "copyrightYear" : "2019",
+        "datePublished": "2019-04-02 00:00:00 \x2b0000 UTC",
+        "dateModified" : "2019-04-02 00:00:00 \x2b0000 UTC",
+        "url" : "\/blog\/unit09a\/",
+        "wordCount" : "767",
+        "keywords" : [ "Blog" ]
+    }
+    </script>
+        
+            
+                <title>UNIT09A：期中專案(OLIST)資料探索</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.55.2" />
+        
+
+
+        
+            <meta name="author" content="Unknown Author">
+        
+        
+            
+                <meta name="description" content="HTML5 UP theme, Future Imperfect with some extra goodies, ported by Julio Pescador.">
+            
+        
+
+        <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="UNIT09A：期中專案(OLIST)資料探索"/>
+<meta name="twitter:description" content="單元摘要： 期中專案(OLIST)資料探索
+
+pacman::p_load(dplyr, ggplot2, readr)💡讀完原始資料之後，先將資料壓縮起來，之後再從壓縮檔讀進會比較快、比較方便
+load(&quot;data/olist.rdata&quot;)【B】檢視資料B1. 確認鍵值欄位Sellers: S$seller_id
+n_distinct(S$seller_id) == nrow(S)[1] TRUEProducts: P$product_id
+n_distinct(S$seller_id) == nrow(S)[1] TRUE
+B2. 多重鍵值Reviews: R$review_id
+n_distinct(R$review_id) == nrow(R)[1] FALSEReviews: R$review_id &amp; R$order_id
+nrow(unique(R[, 1:2])) == nrow(R)[1] TRUE一則評論最多可能談到三個訂單
+table(R$review_id) %&gt;% table.1 2 3 98371 777 25 
+B3. 外來鍵值Order Items: I$order_id &amp; I$order_item_id"/>
+<meta name="twitter:site" content="@example"/>
+
+        <meta property="og:title" content="UNIT09A：期中專案(OLIST)資料探索" />
+<meta property="og:description" content="單元摘要： 期中專案(OLIST)資料探索
+
+pacman::p_load(dplyr, ggplot2, readr)💡讀完原始資料之後，先將資料壓縮起來，之後再從壓縮檔讀進會比較快、比較方便
+load(&quot;data/olist.rdata&quot;)【B】檢視資料B1. 確認鍵值欄位Sellers: S$seller_id
+n_distinct(S$seller_id) == nrow(S)[1] TRUEProducts: P$product_id
+n_distinct(S$seller_id) == nrow(S)[1] TRUE
+B2. 多重鍵值Reviews: R$review_id
+n_distinct(R$review_id) == nrow(R)[1] FALSEReviews: R$review_id &amp; R$order_id
+nrow(unique(R[, 1:2])) == nrow(R)[1] TRUE一則評論最多可能談到三個訂單
+table(R$review_id) %&gt;% table.1 2 3 98371 777 25 
+B3. 外來鍵值Order Items: I$order_id &amp; I$order_item_id" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/unit09a/" />
+<meta property="article:published_time" content="2019-04-02T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-04-02T00:00:00&#43;00:00"/>
+
+        <meta property="og:image" content="//images/logo.png">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="512">
+        <meta property="og:image:height" content="512">
+        
+<meta itemprop="name" content="UNIT09A：期中專案(OLIST)資料探索">
+<meta itemprop="description" content="單元摘要： 期中專案(OLIST)資料探索
+
+pacman::p_load(dplyr, ggplot2, readr)💡讀完原始資料之後，先將資料壓縮起來，之後再從壓縮檔讀進會比較快、比較方便
+load(&quot;data/olist.rdata&quot;)【B】檢視資料B1. 確認鍵值欄位Sellers: S$seller_id
+n_distinct(S$seller_id) == nrow(S)[1] TRUEProducts: P$product_id
+n_distinct(S$seller_id) == nrow(S)[1] TRUE
+B2. 多重鍵值Reviews: R$review_id
+n_distinct(R$review_id) == nrow(R)[1] FALSEReviews: R$review_id &amp; R$order_id
+nrow(unique(R[, 1:2])) == nrow(R)[1] TRUE一則評論最多可能談到三個訂單
+table(R$review_id) %&gt;% table.1 2 3 98371 777 25 
+B3. 外來鍵值Order Items: I$order_id &amp; I$order_item_id">
+
+
+<meta itemprop="datePublished" content="2019-04-02T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-04-02T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="767">
+
+
+
+<meta itemprop="keywords" content="" />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.css">
+            <link rel="stylesheet" href="/css/main.css">
+            <link rel="stylesheet" href="/css/add-on.css">
+            <link rel="stylesheet" href="/css/academicons.min.css">
+        
+
+        
+            
+                
+            
+        
+
+
+  
+    
+    <link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+  
+
+
+      
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      <h1><a href="/">blog</a></h1>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>首頁
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/">
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/itemized/">
+                            <i class="fa fa-list">&nbsp;</i>Itemized
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories/">
+                            <i class="fa fa-sitemap">&nbsp;</i>Categories
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/contact/">
+                            <i class="fa fa-envelope-o">&nbsp;</i>Contact
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="as_sitesearch" value="/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>首頁
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/blog/">
+                            <h3>
+                                <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/itemized/">
+                            <h3>
+                                <i class="fa fa-list">&nbsp;</i>Itemized
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/">
+                            <h3>
+                                <i class="fa fa-sitemap">&nbsp;</i>Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/contact/">
+                            <h3>
+                                <i class="fa fa-envelope-o">&nbsp;</i>Contact
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section class="recent-posts">
+            <div class="mini-posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/unit09a/">UNIT09A：期中專案(OLIST)資料探索</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-04-02'>
+                                    April 2, 2019</time>
+                            </header>
+                            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/unit09a/" class="image featured">
+            <img src="/img/2019/04/" alt="">
+        </a>
+    
+
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/unit09b/">UNIT09B：多軸度比較分析</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-04-02'>
+                                    April 2, 2019</time>
+                            </header>
+                            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/unit09b/" class="image featured">
+            <img src="/img/2019/04/" alt="">
+        </a>
+    
+
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/2019/">測試</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-04-02'>
+                                    April 2, 2019</time>
+                            </header>
+                            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/2019/" class="image featured">
+            <img src="/img/2019/04/00.png" alt="">
+        </a>
+    
+
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/creating-a-new-theme/">Creating a New Theme</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2014-09-28'>
+                                    September 28, 2014</time>
+                            </header>
+                            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/creating-a-new-theme/" class="image featured">
+            <img src="/img/2014/09/pic03.jpg" alt="">
+        </a>
+    
+
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/goisforlovers/">(Hu)go Template Primer</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2014-04-02'>
+                                    April 2, 2014</time>
+                            </header>
+                            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/goisforlovers/" class="image featured">
+            <img src="/img/2014/04/00.png" alt="">
+        </a>
+    
+
+
+                        </article>
+                
+
+                
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
+            </div>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2funit09a%2f&amp;text=UNIT09A%ef%bc%9a%e6%9c%9f%e4%b8%ad%e5%b0%88%e6%a1%88%28OLIST%29%e8%b3%87%e6%96%99%e6%8e%a2%e7%b4%a2&amp;via=example" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2funit09a%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2funit09a%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2funit09a%2f&amp;title=UNIT09A%ef%bc%9a%e6%9c%9f%e4%b8%ad%e5%b0%88%e6%a1%88%28OLIST%29%e8%b3%87%e6%96%99%e6%8e%a2%e7%b4%a2" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2funit09a%2f&amp;title=UNIT09A%ef%bc%9a%e6%9c%9f%e4%b8%ad%e5%b0%88%e6%a1%88%28OLIST%29%e8%b3%87%e6%96%99%e6%8e%a2%e7%b4%a2" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2funit09a%2f&amp;title=UNIT09A%ef%bc%9a%e6%9c%9f%e4%b8%ad%e5%b0%88%e6%a1%88%28OLIST%29%e8%b3%87%e6%96%99%e6%8e%a2%e7%b4%a2" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2funit09a%2f&amp;description=UNIT09A%ef%bc%9a%e6%9c%9f%e4%b8%ad%e5%b0%88%e6%a1%88%28OLIST%29%e8%b3%87%e6%96%99%e6%8e%a2%e7%b4%a2" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Unknown%20Author&amp;body=%2fblog%2funit09a%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+  <header>
+    <div class="title">
+        
+            <h1><a href="/blog/unit09a/">UNIT09A：期中專案(OLIST)資料探索</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2019-04-02'>
+            April 2, 2019</time>
+        <span class="author">Unknown Author</span>
+        
+            <p>4 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+  
+    <section id="social-share">
+      <ul class="icons">
+        
+
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2funit09a%2f&amp;text=UNIT09A%ef%bc%9a%e6%9c%9f%e4%b8%ad%e5%b0%88%e6%a1%88%28OLIST%29%e8%b3%87%e6%96%99%e6%8e%a2%e7%b4%a2&amp;via=example" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2funit09a%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2funit09a%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2funit09a%2f&amp;title=UNIT09A%ef%bc%9a%e6%9c%9f%e4%b8%ad%e5%b0%88%e6%a1%88%28OLIST%29%e8%b3%87%e6%96%99%e6%8e%a2%e7%b4%a2" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2funit09a%2f&amp;title=UNIT09A%ef%bc%9a%e6%9c%9f%e4%b8%ad%e5%b0%88%e6%a1%88%28OLIST%29%e8%b3%87%e6%96%99%e6%8e%a2%e7%b4%a2" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2funit09a%2f&amp;title=UNIT09A%ef%bc%9a%e6%9c%9f%e4%b8%ad%e5%b0%88%e6%a1%88%28OLIST%29%e8%b3%87%e6%96%99%e6%8e%a2%e7%b4%a2" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2funit09a%2f&amp;description=UNIT09A%ef%bc%9a%e6%9c%9f%e4%b8%ad%e5%b0%88%e6%a1%88%28OLIST%29%e8%b3%87%e6%96%99%e6%8e%a2%e7%b4%a2" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Unknown%20Author&amp;body=%2fblog%2funit09a%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+
+      </ul>
+    </section>
+  
+
+  
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/unit09a/" class="image featured">
+            <img src="/img/2019/04/" alt="">
+        </a>
+    
+
+
+  <div id="content">
+    
+
+
+<hr>
+<p><strong>單元摘要：</strong> 期中專案(OLIST)資料探索</p>
+<p><br></p>
+<pre class="r"><code>pacman::p_load(dplyr, ggplot2, readr)</code></pre>
+<hr>
+<p><span style="font-size:24px">💡</span>
+讀完原始資料之後，先將資料壓縮起來，之後再從壓縮檔讀進會比較快、比較方便<br></p>
+<pre class="r"><code>load(&quot;data/olist.rdata&quot;)</code></pre>
+<br><br>
+<hr>
+<div id="b" class="section level3">
+<h3>【B】檢視資料</h3>
+<div id="b1.-" class="section level5">
+<h5>B1. 確認鍵值欄位</h5>
+<p>Sellers: <code>S$seller_id</code></p>
+<pre class="r"><code>n_distinct(S$seller_id) == nrow(S)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p>Products: <code>P$product_id</code></p>
+<pre class="r"><code>n_distinct(S$seller_id) == nrow(S)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p><br></p>
+</div>
+<div id="b2.-" class="section level5">
+<h5>B2. 多重鍵值</h5>
+<p>Reviews: <code>R$review_id</code></p>
+<pre class="r"><code>n_distinct(R$review_id) == nrow(R)</code></pre>
+<pre><code>[1] FALSE</code></pre>
+<p>Reviews: <code>R$review_id</code> &amp; <code>R$order_id</code></p>
+<pre class="r"><code>nrow(unique(R[, 1:2])) == nrow(R)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p>一則評論最多可能談到三個訂單</p>
+<pre class="r"><code>table(R$review_id) %&gt;% table</code></pre>
+<pre><code>.
+    1     2     3 
+98371   777    25 </code></pre>
+<p><br></p>
+</div>
+<div id="b3.-" class="section level5">
+<h5>B3. 外來鍵值</h5>
+<p>Order Items: <code>I$order_id</code> &amp; <code>I$order_item_id</code></p>
+<pre class="r"><code>nrow(unique(I[, 1:2])) == nrow(I)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p><span style="font-size:24px">🗿</span>
+一筆訂單最多會有多少項目(<code>order_item_id</code>)呢？</p>
+<pre class="r"><code>#</code></pre>
+<p><span style="font-size:24px">🗿</span>
+一筆訂單最多會有多少個賣家(<code>seller_id</code>)呢？</p>
+<pre class="r"><code>table( unique(I[, c(1,4)])$order_id ) %&gt;% table</code></pre>
+<pre><code>.
+    1     2     3     4     5 
+97388  1219    54     3     2 </code></pre>
+<p><span style="font-size:24px">🗿</span>
+一筆訂單最多會包含多少種產品(<code>product_id</code>)呢？</p>
+<pre class="r"><code>#</code></pre>
+<br><br>
+<hr>
+</div>
+</div>
+<div id="c" class="section level3">
+<h3>【C】製作欄位</h3>
+<p><span style="font-size:24px">💡</span>
+做分析之前我們一定要先決定分析對象(Unit of Analysis)<br></p>
+<p>假如我們要對所有的賣家做分析，我們就要依<code>selller_id</code>做彙總； 先從訂單項目(<code>I</code>)做起</p>
+<pre class="r"><code>Z = I %&gt;% group_by(seller_id) %&gt;% summarise(
+  ItemsSold = n(),
+  Rev = sum(price),
+  noProd = n_distinct(product_id),
+  avgPrice = mean(price),
+  maxPrice = max(price),
+  minPrice = min(price),
+  avgFreight = mean(freight_value),
+  avgRevProd = Rev/noProd,
+  avgItemsProd = ItemsSold/noProd
+)
+summary(Z)</code></pre>
+<pre><code>  seller_id           ItemsSold           Rev             noProd     
+ Length:3095        Min.   :   1.0   Min.   :     4   Min.   :  1.0  
+ Class :character   1st Qu.:   2.0   1st Qu.:   209   1st Qu.:  2.0  
+ Mode  :character   Median :   8.0   Median :   821   Median :  4.0  
+                    Mean   :  36.4   Mean   :  4391   Mean   : 11.1  
+                    3rd Qu.:  24.0   3rd Qu.:  3281   3rd Qu.: 10.0  
+                    Max.   :2033.0   Max.   :229473   Max.   :399.0  
+    avgPrice         maxPrice         minPrice        avgFreight   
+ Min.   :   3.5   Min.   :   3.5   Min.   :   0.8   Min.   :  1.2  
+ 1st Qu.:  52.2   1st Qu.:  81.0   1st Qu.:  21.6   1st Qu.: 14.7  
+ Median :  95.5   Median : 169.9   Median :  44.8   Median : 18.2  
+ Mean   : 176.3   Mean   : 335.4   Mean   : 110.4   Mean   : 23.4  
+ 3rd Qu.: 174.0   3rd Qu.: 349.9   3rd Qu.:  99.0   3rd Qu.: 24.4  
+ Max.   :6729.0   Max.   :6735.0   Max.   :6729.0   Max.   :308.3  
+   avgRevProd       avgItemsProd   
+ Min.   :    3.5   Min.   :  1.00  
+ 1st Qu.:   89.0   1st Qu.:  1.00  
+ Median :  179.8   Median :  1.67  
+ Mean   :  417.5   Mean   :  2.67  
+ 3rd Qu.:  397.7   3rd Qu.:  2.73  
+ Max.   :16983.5   Max.   :128.33  </code></pre>
+<p>計算每一個賣家的評等時要考慮：</p>
+<ul>
+<li>每一則評論可能有多於一個訂單而</li>
+<li>每一筆訂單可能包含多一個賣家</li>
+</ul>
+<p>這兩個問題。</p>
+<pre class="r"><code>X = unique(I[,c(1,4)]) %&gt;% left_join(R[,2:3]) %&gt;% 
+  group_by(seller_id) %&gt;% summarise(
+    noReview = n(),
+    avgScore = mean(review_score),
+    minScore = min(review_score),
+    maxScore = max(review_score)) </code></pre>
+<pre><code>Joining, by = &quot;order_id&quot;</code></pre>
+<pre class="r"><code>summary(X)</code></pre>
+<pre><code>  seller_id            noReview         avgScore       minScore   
+ Length:3095        Min.   :   1.0   Min.   :1.00   Min.   :1.00  
+ Class :character   1st Qu.:   2.0   1st Qu.:3.75   1st Qu.:1.00  
+ Mode  :character   Median :   7.0   Median :4.17   Median :1.00  
+                    Mean   :  32.5   Mean   :3.98   Mean   :2.25  
+                    3rd Qu.:  22.0   3rd Qu.:4.60   3rd Qu.:4.00  
+                    Max.   :1860.0   Max.   :5.00   Max.   :5.00  
+    maxScore   
+ Min.   :1.00  
+ 1st Qu.:5.00  
+ Median :5.00  
+ Mean   :4.69  
+ 3rd Qu.:5.00  
+ Max.   :5.00  </code></pre>
+<p>最後併入賣家的基本資料</p>
+<pre class="r"><code>Z = Z %&gt;% left_join(X) %&gt;% left_join(S)</code></pre>
+<pre><code>Joining, by = &quot;seller_id&quot;
+Joining, by = &quot;seller_id&quot;</code></pre>
+<pre class="r"><code>is.na(Z) %&gt;% colSums</code></pre>
+<pre><code>             seller_id              ItemsSold                    Rev 
+                     0                      0                      0 
+                noProd               avgPrice               maxPrice 
+                     0                      0                      0 
+              minPrice             avgFreight             avgRevProd 
+                     0                      0                      0 
+          avgItemsProd               noReview               avgScore 
+                     0                      0                      0 
+              minScore               maxScore seller_zip_code_prefix 
+                     0                      0                      0 
+           seller_city           seller_state 
+                     0                      0 </code></pre>
+<p>做一個簡單的分析： 賣家的平均評等最高的20個省份是 …</p>
+<pre class="r"><code>tapply(Z$avgScore, Z$seller_state, mean) %&gt;% sort %&gt;% tail(20) </code></pre>
+<pre><code>    SE     RO     BA     SP     RJ     MA     PR     DF     MG     RS     SC 
+3.8500 3.8542 3.9316 3.9541 3.9657 3.9720 4.0155 4.0319 4.0336 4.0501 4.0725 
+    PI     GO     PE     ES     MT     MS     PB     RN     PA 
+4.0833 4.1011 4.1091 4.1959 4.2231 4.2510 4.2812 4.4757 4.5000 </code></pre>
+<br><br>
+<hr>
+</div>
+<div id="d" class="section level3">
+<h3>【D】併入其它資料</h3>
+<p><code>Funnel</code>資料集裡面有更多賣家欄位，但是它的資料筆數不多</p>
+<pre class="r"><code>Z1 = left_join(Q, L) %&gt;% inner_join(Z)</code></pre>
+<pre><code>Joining, by = &quot;mql_id&quot;</code></pre>
+<pre><code>Joining, by = &quot;seller_id&quot;</code></pre>
+<pre class="r"><code>dim(Z1)</code></pre>
+<pre><code>[1] 380  33</code></pre>
+<p>依賣家的行為做彙總</p>
+<pre class="r"><code>behavior = group_by(Z1, lead_behaviour_profile) %&gt;% summarise(
+  noSellers = n(),
+  totalRev = sum(Rev),
+  avgRev = mean(Rev),
+  avgReview = mean(noReview),
+  avgScore = mean(avgScore)
+  ) %&gt;% arrange( desc(avgScore) )
+behavior</code></pre>
+<pre><code># A tibble: 7 x 6
+  lead_behaviour_profile noSellers totalRev avgRev avgReview avgScore
+  &lt;chr&gt;                      &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 cat, wolf                      1      59     59       1        5   
+2 wolf                          43   21378.   497.      4.60     4.39
+3 &lt;NA&gt;                          91  231802.  2547.     17.0      4.33
+4 eagle                         50   90725.  1814.     13.5      4.28
+5 cat                          184  282479.  1535.      9.64     4.25
+6 shark                         10   49512.  4951.     32.3      4.23
+7 eagle, cat                     1     896    896       3        3.33</code></pre>
+<p>依產業別做彙總</p>
+<pre class="r"><code>segment = group_by(Z1, business_segment) %&gt;% summarise(
+  noSellers = n(),
+  totalRev = sum(Rev),
+  avgItemsSold = mean(ItemsSold),
+  avgPrice = totalRev/avgItemsSold,
+  avgRev = mean(Rev),
+  avgReview = mean(noReview),
+  avgScore = mean(avgScore)
+  ) %&gt;% arrange( desc(totalRev) )
+segment</code></pre>
+<pre><code># A tibble: 29 x 8
+   business_segment noSellers totalRev avgItemsSold avgPrice avgRev avgReview
+   &lt;chr&gt;                &lt;int&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+ 1 watches                  3  117279.       198        592. 39093.    193.  
+ 2 health_beauty           45   90836.        18.2     4979.  2019.     15.7 
+ 3 household_utili~        44   51569.        12.8     4045.  1172.     11.4 
+ 4 audio_video_ele~        31   50265.         8.87    5666.  1621.      8.03
+ 5 small_appliances         7   47675.         9.86    4837.  6811.      9.71
+ 6 home_decor              44   44102.        10.3     4293.  1002.      8.23
+ 7 pet                     17   40499.        16.8     2407.  2382.     14.6 
+ 8 construction_to~        32   34539.         9.94    3476.  1079.      8.5 
+ 9 car_accessories         30   30175.         5.47    5520.  1006.      4.93
+10 home_appliances          5   26241.        28.2      931.  5248.     27   
+# ... with 19 more rows, and 1 more variable: avgScore &lt;dbl&gt;</code></pre>
+<pre class="r"><code>save(Z, Z1, segment, file=&quot;data/Z.rdata&quot;)</code></pre>
+<br><br><br>
+<hr>
+</div>
+
+  </div>
+
+  <footer>
+    <ul class="stats">
+  <li class="categories">
+    <ul>
+        
+            
+            
+                <i class="fa fa-folder"></i>
+                
+                
+                <li><a class="article-category-link" href="/categories/go">Go</a></li>
+                
+            
+        
+    </ul>
+  </li>
+  <li class="tags">
+    <ul>
+        
+    </ul>
+  </li>
+</ul>
+
+  </footer>
+
+</article>
+
+
+<ul class="actions pagination">
+    
+        <li><a href="/blog/unit09b/"
+                class="button big previous">UNIT09B：多軸度比較分析</a></li>
+    
+
+    
+</ul>
+
+
+    </div>
+    
+<section id="sidebar">
+
+  
+  <section id="intro">
+    
+    
+      
+        <a href='/'><img src="/img/main/giphy.gif" class="intro-circle" width="" alt="Hugo Future Imperfect" /></a>
+      
+    
+    
+      <header>
+        <h2>chuanMing Blog</h2>
+        <p>Another fine responsive site template by <a href="http://html5up.net">HTML5 UP</a>. Ported by Julio Pescador with some extra goodies <i class='fa fa-hand-peace-o'></i></p>
+      </header>
+    
+    
+      <ul class="icons">
+        
+          
+    <li><a href="/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a></li>
+
+
+        
+        
+  <li><a href="//github.com/jpescador/hugo-future-imperfect" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//flickr.com/photos/example" target="_blank" title="Flickr" class="fa fa-flickr"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//linkedin.com/in/example" target="_blank" title="LinkedIn" class="fa fa-linkedin"></a></li>
+
+
+
+  <li><a href="//linkedin.com/company/examplebusiness" target="_blank" title="LinkedIn Company" class="fa fa-linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+  <li><a href="//facebook.com/example" target="_blank" title="Facebook" class="fa fa-facebook"></a></li>
+
+
+
+
+
+  <li><a href="//reddit.com/user/example" target="_blank" title="Reddit" class="fa fa-reddit"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//instagram.com/example" target="_blank" title="Instagram" class="fa fa-instagram"></a></li>
+
+
+
+
+
+  <li><a href="//twitter.com/example" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+
+
+
+
+  <li><a href="//pinterest.com/example" target="_blank" title="Pinterest" class="fa fa-pinterest-p"></a></li>
+
+
+
+  <li><a href="//telegram.me/example" target="_blank" title="telegram" class="fa fa-telegram"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//researchgate.net/profile/example" target="_blank" title="Research Gate"><i class="ai ai-researchgate"></i></a></li>
+
+
+
+  <li><a href="mailto:example" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+  </section>
+
+  
+  <section class="recent-posts">
+    <div class="mini-posts">
+      <header>
+        <h3>Recent Posts</h3>
+      </header>
+      <div class="posts-container">
+        
+
+        
+          
+        
+
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/unit09a/">UNIT09A：期中專案(OLIST)資料探索</a>
+              </h3>
+              
+              <time class="published" datetime='2019-04-02'>
+                April 2, 2019
+              </time>
+            </header>
+            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/unit09a/" class="image featured">
+            <img src="/img/2019/04/" alt="">
+        </a>
+    
+
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/unit09b/">UNIT09B：多軸度比較分析</a>
+              </h3>
+              
+              <time class="published" datetime='2019-04-02'>
+                April 2, 2019
+              </time>
+            </header>
+            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/unit09b/" class="image featured">
+            <img src="/img/2019/04/" alt="">
+        </a>
+    
+
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/2019/">測試</a>
+              </h3>
+              
+              <time class="published" datetime='2019-04-02'>
+                April 2, 2019
+              </time>
+            </header>
+            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/2019/" class="image featured">
+            <img src="/img/2019/04/00.png" alt="">
+        </a>
+    
+
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/creating-a-new-theme/">Creating a New Theme</a>
+              </h3>
+              
+              <time class="published" datetime='2014-09-28'>
+                September 28, 2014
+              </time>
+            </header>
+            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/creating-a-new-theme/" class="image featured">
+            <img src="/img/2014/09/pic03.jpg" alt="">
+        </a>
+    
+
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/goisforlovers/">(Hu)go Template Primer</a>
+              </h3>
+              
+              <time class="published" datetime='2014-04-02'>
+                April 2, 2014
+              </time>
+            </header>
+            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/goisforlovers/" class="image featured">
+            <img src="/img/2014/04/00.png" alt="">
+        </a>
+    
+
+
+          </article>
+        
+      </div>
+
+      
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
+    </div>
+  </section>
+
+  
+  
+  
+  
+  
+    <section id="categories">
+      <header>
+        <h3>
+          <a href="/categories/">Categories</a>
+        </h3>
+      </header>
+        
+          
+        
+
+        
+        <p>
+          <article>
+            <header>
+              
+                Uncategorized
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/go/">go</a>
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/hugo/">hugo</a>
+                <span style="float:right;">3</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/jekyll/">jekyll</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/r/">r</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+    </section>
+  
+  
+
+  
+  
+    <section id="mini-bio">
+      <h3>About</h3>
+      <p>玩起來</p>
+      <a href="/about/" class="button">Learn More</a>
+    </section>
+  
+
+  
+  <section id="footer">
+    
+      <ul class="icons">
+        
+          
+    <li><a href="/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a></li>
+
+
+        
+        
+  <li><a href="//github.com/jpescador/hugo-future-imperfect" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//flickr.com/photos/example" target="_blank" title="Flickr" class="fa fa-flickr"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//linkedin.com/in/example" target="_blank" title="LinkedIn" class="fa fa-linkedin"></a></li>
+
+
+
+  <li><a href="//linkedin.com/company/examplebusiness" target="_blank" title="LinkedIn Company" class="fa fa-linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+  <li><a href="//facebook.com/example" target="_blank" title="Facebook" class="fa fa-facebook"></a></li>
+
+
+
+
+
+  <li><a href="//reddit.com/user/example" target="_blank" title="Reddit" class="fa fa-reddit"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//instagram.com/example" target="_blank" title="Instagram" class="fa fa-instagram"></a></li>
+
+
+
+
+
+  <li><a href="//twitter.com/example" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+
+
+
+
+  <li><a href="//pinterest.com/example" target="_blank" title="Pinterest" class="fa fa-pinterest-p"></a></li>
+
+
+
+  <li><a href="//telegram.me/example" target="_blank" title="telegram" class="fa fa-telegram"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//researchgate.net/profile/example" target="_blank" title="Research Gate"><i class="ai ai-researchgate"></i></a></li>
+
+
+
+  <li><a href="mailto:example" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+    <p class="copyright">
+      
+        &copy; 2019
+        
+          chuanMing Blog
+        
+      .
+      Powered by <a href="//gohugo.io" target="_blank">Hugo</a>
+    </p>
+  </section>
+</section>
+
+    </div>
+    <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+    
+
+    
+      
+    
+
+    
+      
+      
+      
+        <script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+        
+        
+        
+        <script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+        <script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+        <script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/css.min.js"></script>
+        <script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+      
+    
+    
+    
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.js"></script>
+      <script src="/js/util.js"></script>
+      <script src="/js/main.js"></script>
+      <script src="/js/backToTop.js"></script>
+    
+
+    
+      
+        
+      
+    
+
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+      <script src="//yihui.name/js/math-code.js"></script>
+<script async
+src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+  </body>
+</html>
+
