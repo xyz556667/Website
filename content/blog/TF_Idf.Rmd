@@ -1,7 +1,7 @@
 ---
 author: 張傳銘
 categories:
-- R
+- GO
 date: "`r Sys.time()`"
 description: ""
 featured: ""
